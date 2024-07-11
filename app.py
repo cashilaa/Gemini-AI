@@ -7,6 +7,8 @@ import io
 import random
 import os
 from dotenv import load_dotenv
+from PIL import Image
+import io
 
 # Load environment variables
 load_dotenv()
@@ -132,19 +134,32 @@ def main():
             st.session_state.messages.append({"role": "assistant", "content": response})
 
     elif feature == "Image Analysis":
-        st.subheader("Health Image Analysis")
-        uploaded_file = st.file_uploader("Upload an image for health analysis", type=["jpg", "jpeg", "png"])
-        if uploaded_file is not None:
-            image = Image.open(uploaded_file)
-            st.image(image, caption="Uploaded Image", use_column_width=True)
-            if st.button("Analyze Image"):
-                with st.spinner("Analyzing..."):
-                    image_prompt = "Analyze this health-related image and provide insights. Describe what you see and any potential health implications."
-                    image_data = io.BytesIO()
-                    image.save(image_data, format="PNG")
-                    image_data = image_data.getvalue()
-                    response = get_gemini_response(image_prompt, image_data)
-                    st.write(response)
+       st.subheader("Health Image Analysis")
+    uploaded_file = st.file_uploader("Upload an image for health analysis", type=["jpg", "jpeg", "png"])
+    if uploaded_file is not None:
+        # Open the image using PIL
+        image = Image.open(uploaded_file)
+        
+        # Display the image
+        st.image(image, caption="Uploaded Image", use_column_width=True)
+        
+        if st.button("Analyze Image"):
+            with st.spinner("Analyzing..."):
+                image_prompt = "Analyze this health-related image and provide insights. Describe what you see and any potential health implications."
+                
+                # Convert PIL Image to bytes
+                img_byte_arr = io.BytesIO()
+                image.save(img_byte_arr, format='PNG')
+                img_byte_arr = img_byte_arr.getvalue()
+                
+                # Create the image part for the Gemini API
+                image_part = {
+                    "mime_type": "image/png",
+                    "data": img_byte_arr
+                }
+                
+                response = get_gemini_response(image_prompt, image_part)
+                st.write(response)
 
     elif feature == "Health Charts":
         st.subheader("Health Data Visualization")
