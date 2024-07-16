@@ -15,7 +15,7 @@ HealthMate AI is a comprehensive health companion powered by advanced AI, built 
 ## Installation
 
 1. Clone this repository:
-git clone https://github.com/cashilaa/healthmate-ai.git
+git clone https://github.com/cashilaa/gemini-AI.git
 cd healthmate-ai
 Copy
 2. Create a virtual environment (optional but recommended):
