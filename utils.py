@@ -1,6 +1,4 @@
 import random
-import os
-from dotenv import load_dotenv
 
 def get_daily_health_tip():
     tips = [
@@ -11,6 +9,3 @@ def get_daily_health_tip():
         "Get 7-9 hours of sleep tonight for optimal health."
     ]
     return random.choice(tips)
-
-def load_environment():
-    load_dotenv()
