@@ -1,7 +1,5 @@
-import streamlit as st
-
-def apply_custom_css():
-    st.markdown("""
+def get_custom_css():
+    return """
     <style>
     .big-font {
         font-size:36px !important;
@@ -27,4 +25,4 @@ def apply_custom_css():
         background-color: #3C3C3C;
     }
     </style>
-    """, unsafe_allow_html=True)
+    """
